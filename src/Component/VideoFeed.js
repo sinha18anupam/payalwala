@@ -77,7 +77,7 @@ const VideoFeed = ({ videos }) => {
   };
 
   const handleNavigateToCardPage = () => {
-    navigate('/card'); // Navigate to the card page
+    navigate('/wishlist'); // Navigate to the card page
   };
 
   return (

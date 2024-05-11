@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import VideoFeed from './Component/VideoFeed';
 import AboutCom from './Component/AboutCom';
-import Card from './Component/Card';
+import Wishlist from './Component/Wishlist';
 import { useState,useEffect } from 'react';
 import axios from 'axios'
 import './App.css'
-import Odercard from './Component/Odercard';
+// import OderWishlist from './Component/OderWishlist';
 const App = () => {
 
   const [items, setItems] = useState([]);
@@ -22,7 +22,7 @@ const App = () => {
   
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://192.168.31.67:5000/api/item/get');
+      const response = await axios.get('http://192.168.1.12:5000/api/item/get');
       console.log(response.data.items)
 
       setItems(response.data.items);
@@ -32,25 +32,35 @@ const App = () => {
   };
 
   return (
-    <div className='mainvideo'>
+    
+    
  <Router>
-       
-           <Routes>
-             <Route path="/" element={<VideoFeed
+
+  <div className='mainvideo'>
+          <Routes>
+    
+        
+
+<Route path="/" element={<VideoFeed
 videos={items}
 />} />
+</Routes>
+</div>
+
+
+<Routes>
 <Route path="/aboute" element={<AboutCom />} />
-<Route path="/card" element={<Card />} />
-<Route path="/oder" element={<Odercard/>} />
+<Route path="/Wishlist" element={<Wishlist/>} />
+{/* <Route path="/oder" element={<OderWishlist/>} /> */}
           
             
            </Routes>
-         </Router>
+         
     
 
-</div>
 
-  
+
+</Router>
   );
 };
 
