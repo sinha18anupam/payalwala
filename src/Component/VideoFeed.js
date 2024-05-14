@@ -1,6 +1,7 @@
+
 import React, { useState, useRef, useEffect } from 'react';
-import { FaHome, FaHeart, FaPlayCircle, FaUser, FaShare, FaShoppingCart } from 'react-icons/fa'; // Import required icons
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from React Router
+import { FaHome, FaHeart, FaPlayCircle, FaUser, FaShare, FaShoppingCart } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import './VideoFeed.css';
 import Iconbar from './Iconbar';
 
@@ -8,27 +9,31 @@ const VideoFeed = ({ videos }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(Array(videos.length).fill(true));
   const [wishlistPopupVisible, setWishlistPopupVisible] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const containerRef = useRef(null);
   let touchStartY = useRef(null);
   let scrollTimeout = useRef(null);
+  const [isMuted, setIsMuted] = useState(true);
 
-  
+  // Function to toggle the muted state
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+  };
+
   useEffect(() => {
-  
     document.dispatchEvent(new MouseEvent('click'));
   }, []);
 
   const handleScroll = (event) => {
     const { deltaY } = event;
-    clearTimeout(scrollTimeout.current); // Clear any previous timeout
+    clearTimeout(scrollTimeout.current);
     scrollTimeout.current = setTimeout(() => {
       if (deltaY > 0 && currentIndex < videos.length - 1) {
         setCurrentIndex((prevIndex) => prevIndex + 1);
       } else if (deltaY < 0 && currentIndex > 0) {
         setCurrentIndex((prevIndex) => prevIndex - 1);
       }
-    }, 100); // Adjust the delay time as needed
+    }, 100);
   };
 
   const handleTouchStart = (event) => {
@@ -41,10 +46,10 @@ const VideoFeed = ({ videos }) => {
     const touchMoveY = event.touches[0].clientY;
     const deltaY = touchMoveY - touchStartY.current;
 
-    if (Math.abs(deltaY) > 10) { // Adjust the threshold as needed
-      if (deltaY < 0 && currentIndex < videos.length - 1) { // Change the condition here
+    if (Math.abs(deltaY) > 10) {
+      if (deltaY < 0 && currentIndex < videos.length - 1) {
         setCurrentIndex((prevIndex) => prevIndex + 1);
-      } else if (deltaY > 0 && currentIndex > 0) { // Change the condition here
+      } else if (deltaY > 0 && currentIndex > 0) {
         setCurrentIndex((prevIndex) => prevIndex - 1);
       }
       touchStartY.current = null;
@@ -70,15 +75,14 @@ const VideoFeed = ({ videos }) => {
   };
 
   const handleAddToWishlist = () => {
-    setWishlistPopupVisible(true); 
+    setWishlistPopupVisible(true);
     setTimeout(() => {
-      setWishlistPopupVisible(false); 
-    }, 3000); 
-   
+      setWishlistPopupVisible(false);
+    }, 3000);
   };
 
   const handleNavigateToCardPage = () => {
-    navigate('/wishlist'); // Navigate to the card page
+    navigate('/wishlist');
   };
 
   return (
@@ -87,10 +91,8 @@ const VideoFeed = ({ videos }) => {
       onWheel={handleScroll}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
-    
       ref={containerRef}
     >
-      
       {wishlistPopupVisible && (
         <div className="wishlist-popup">
           Item added to wishlist
@@ -98,23 +100,16 @@ const VideoFeed = ({ videos }) => {
       )}
       {videos.map((video, index) => (
         <div key={index} className={`video-container ${index === currentIndex ? 'active' : ''}`}>
-          {/* {loading[index] && <div className="loading-animation"></div>}  */}
-          
-            <FaShoppingCart className="card" onClick={handleNavigateToCardPage} />
-      
+          <FaShoppingCart className="card" onClick={handleNavigateToCardPage} />
           <video
-            className={`video`} // Hide video element if still loading
+            className="video"
             src={video.itempost}
-            // autoPlay
             onClick={handleTap}
             loop
-            
+            autoPlay
             playsInline
-            autoPlay='true'
-            muted={index !== currentIndex}
-            // onLoadedData={() => handleVideoLoadedData(index)} // Call when video data has loaded
-          />
-          <Iconbar video={video} index={index} onAddToWishlist={handleAddToWishlist} />
+            muted={index === currentIndex ? isMuted : true}           />
+          <Iconbar  isMuted={isMuted} toggleMute={toggleMute}   video={video} index={index} onAddToWishlist={handleAddToWishlist} />
         </div>
       ))}
     </div>

@@ -4,7 +4,7 @@ import './VideoFeed.css'
 import { FaHome, FaHeart, FaPlayCircle, FaUser, FaShare,FaShoppingBag } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
-export default function Iconbar({index, video,onAddToWishlist}) {
+export default function Iconbar({index, video,onAddToWishlist,isMuted, toggleMute}) {
 
     const navigate = useNavigate(); 
   
@@ -99,7 +99,14 @@ const addtowishlist = (index, video) => {
   }
 
   return (
+    <>
+    <div className='muteunmute'>
+    <i  onClick={toggleMute} class="fa-solid fa-music">  {isMuted ? '' : ''}</i>
+
+    </div>
     <div className='bar'>
+           
+
             <FaHome />
             <FaPlayCircle onClick={()=>{navigate('/')}} />
             <div className={`${video  ? 'sharebar' : 'show'}`}>
@@ -120,5 +127,6 @@ const addtowishlist = (index, video) => {
             </div>
           
           </div>
+          </>
   )
 }
