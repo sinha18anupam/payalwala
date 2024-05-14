@@ -13,6 +13,7 @@ const VideoFeed = ({ videos }) => {
   let touchStartY = useRef(null);
   let scrollTimeout = useRef(null);
 
+  
   useEffect(() => {
   
     document.dispatchEvent(new MouseEvent('click'));
@@ -104,10 +105,12 @@ const VideoFeed = ({ videos }) => {
           <video
             className={`video`} // Hide video element if still loading
             src={video.itempost}
-            autoPlay
+            // autoPlay
             onClick={handleTap}
             loop
+            
             playsInline
+            autoPlay='true'
             muted={index !== currentIndex}
             // onLoadedData={() => handleVideoLoadedData(index)} // Call when video data has loaded
           />

@@ -5,10 +5,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import VideoFeed from './Component/VideoFeed';
 import AboutCom from './Component/AboutCom';
 import Wishlist from './Component/Wishlist';
+import Profile from './Component/Profile';
+
 import { useState,useEffect } from 'react';
 import axios from 'axios'
 import './App.css'
-// import OderWishlist from './Component/OderWishlist';
+import Odercard from './Component/Odercard';
+import Card from './Card';
 const App = () => {
 
   const [items, setItems] = useState([]);
@@ -41,7 +44,7 @@ const App = () => {
     
         
 
-<Route path="/" element={<VideoFeed
+<Route path="/" element={<VideoFeed   
 videos={items}
 />} />
 </Routes>
@@ -51,7 +54,9 @@ videos={items}
 <Routes>
 <Route path="/aboute" element={<AboutCom />} />
 <Route path="/Wishlist" element={<Wishlist/>} />
-{/* <Route path="/oder" element={<OderWishlist/>} /> */}
+<Route path="/profile" element={<Profile/>} />
+<Route path="/order" element={<Odercard/>} />
+<Route path="/cart" element={<Card/>} />
           
             
            </Routes>

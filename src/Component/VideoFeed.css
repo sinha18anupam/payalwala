@@ -1,7 +1,8 @@
 .video-feed {
-    overflow-y: scroll;
+    /* overflow-y: scroll;x */
     width: 30%;
-    height: 100%;
+    height: 100vh;
+    /* overflow: hidden; */
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -12,10 +13,10 @@
    
     position: relative;
     width: 100%;
-    height: 100%;
+    /* height: 99%; */
     display: none;
     border: 1px solid black;
-    border-radius: 20px;
+    /* border-radius: 20px; */
     background-color: #f0f5ff; /* Lighter shade of blue */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   }
@@ -33,8 +34,9 @@
   
     width: 100%;
     height: 15%;
-    background-color: red;
-    border-radius: 20px;
+    /* background-color: red; */
+    background: transparent;
+    /* border-radius: 20px; */
     top : 85%;
     justify-content: space-between;
   
@@ -62,17 +64,23 @@
   }
   
   .video-container.active {
-    border-radius: 20px;
+    /* border-radius: 20px; */
+    overflow: hidden;
+    /* position: fixed; */
+    /* margin-top: -50px; */
+    height: 100%;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     display: block;
   }
   
   .video {
-    border-radius: 20px;
-    position: absolute;
+    /* border-radius: 20px; */
+    /* position: absolute; */
+    overflow: hidden;
+    position: fixed;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit:fill ;
   }
   
   
@@ -100,10 +108,12 @@
   }
   @media only screen and (max-width: 768px) {
     .video-feed {
-      width: 100%; /* Occupy full width */
+      width: 100%;
+      height: 100vh; /* Occupy full width */
     }
     .video-container{
       margin: 0px;
+      height: 100vh;
     }
   }
   

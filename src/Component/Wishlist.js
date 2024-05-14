@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Iconbar from './Iconbar'
 import './Wishlist.css'
+import { ReactComponent as Left } from './Assetss/left.svg';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function Wishlist() {
     const [WishlistData, setWishlistData] = useState([]);
@@ -10,7 +12,7 @@ export default function Wishlist() {
         const userData = localStorage.getItem('userId');
         try {
            
-            const response = await axios.get(`http://192.168.1.12:5000/api/wishlist/get/1`);
+            const response = await axios.get(`http://192.168.1.2:5000/api/wishlist/get/1`);
             console.log(response.items);
            
                 setWishlistData(response.data.items);
@@ -28,7 +30,7 @@ const handleRemoveItem = async (Wishlist) => {
     try {
 
         
-        await axios.delete(`http://192.168.1.12:5000/api/wishlist/del/1/${Wishlist}`);
+        await axios.delete(`http://192.168.1.2:5000/api/wishlist/del/1/${Wishlist}`);
      
       console.log('Wishlist removing')
       fetchData()
@@ -39,7 +41,7 @@ const handleRemoveItem = async (Wishlist) => {
 
     const handleQuantityChange = async (itemId, newQuantity) => {
         try {
-            await axios.put(`http://192.168.1.12:5000/api/Wishlist/up/${itemId}`, { quantity: newQuantity });
+            await axios.put(`http://192.168.1.2:5000/api/Wishlist/up/${itemId}`, { quantity: newQuantity });
            
             fetchData();
         } catch (error) {
@@ -51,7 +53,7 @@ const handleRemoveItem = async (Wishlist) => {
 
         try {
                
-            const response = await axios.post("http://192.168.1.12:5000/api/oder/",{
+            const response = await axios.post("http://192.168.1.2:5000/api/oder/",{
                 status : false,
                 img   : video.itempost,
                 productname: video.itemname,
@@ -76,15 +78,16 @@ const handleRemoveItem = async (Wishlist) => {
         // }
     
         const valu = {
-            itemids: item,
-            userids: 1,
+            item: item,
+            user: 1,
+            quantity : 1,
           
         };
     
         console.log('Value to be posted:', valu);
     
         try {
-            const response = await axios.post('http://192.168.1.12:5000/api/wishlist/post', valu);
+            const response = await axios.post('http://192.168.1.2:5000/api/card/post', valu);
             console.log('Response:', response.data);
         } catch (error) {
             console.error('Error posting to card:', error);
@@ -103,10 +106,10 @@ const handleRemoveItem = async (Wishlist) => {
 
     <div className='Wishlist-Mainpage'>
     <div className='wishlist-navbar'>
-       {/* <div className='svg-back'>
-         <Link to='/'><Left/></Link>  
+       <div className='svg-back'>
+         <Link to='/profile'><Left/></Link>  
            WishList
-       </div> */}
+       </div>
 
    </div>
    <div className='boxxx'>
@@ -129,7 +132,7 @@ const handleRemoveItem = async (Wishlist) => {
         <p>{item.itemname}</p>
             <p>{item.dec}</p>
             <p> {item.price}</p>
-            <p> <button onClick={()=>{handleAddToCart(item.itdemid)}}>Add to cart</button></p>
+            <p> <button onClick={()=>{handleAddToCart(item.itemid)}}>Add to cart</button></p>
             </div>
              </div>
 

@@ -28,7 +28,7 @@ const handleAddToCart = async (item) => {
     console.log('Value to be posted:', valu);
 
     try {
-        const response = await axios.post('http://192.168.1.12:5000/api/wishlist/post', valu);
+        const response = await axios.post('http://192.168.1.2:5000/api/wishlist/post', valu);
         console.log('Response:', response.data);
     } catch (error) {
         console.error('Error posting to card:', error);
@@ -39,7 +39,7 @@ const handleRemoveItem = async (card) => {
     try {
 
         
-        await axios.delete(`http://192.168.1.12:5000/api/wishlist/del/1/${card}`);
+        await axios.delete(`http://192.168.1.2:5000/api/wishlist/del/1/${card}`);
      
       console.log('card removing')
     } catch (error) {
@@ -81,7 +81,7 @@ const addtowishlist = (index, video) => {
 
     try {
            
-        const response = await axios.post("http://192.168.1.12:5000/api/oder/",{
+        const response = await axios.post("http://192.168.1.2:5000/api/oder/",{
             status : false,
             img   : video.itempost,
             productname: video.itemname,
@@ -113,7 +113,7 @@ const addtowishlist = (index, video) => {
 <FaShoppingBag className={`${video  ? '' : 'nn'}`} onClick={()=>{
     navigate('/oder')
 }}/>
-             <FaUser/>
+             <FaUser onClick={()=>{navigate('/profile')}}/>
 
            
 
